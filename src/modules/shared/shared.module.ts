@@ -1,4 +1,21 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
-@Module({})
-export class SharedModule {}
+import { UserSchema } from '../core/schemas/user.schema';
+
+
+@Module({
+  imports: [
+    MongooseModule.forFeature([
+      {name: 'User', schema: UserSchema},
+    ]),
+  ],
+  providers: [
+  ],
+  exports: [
+    MongooseModule,
+  ],
+})
+
+export class SharedModule {
+}
