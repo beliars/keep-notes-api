@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 
 import * as dotenv from 'dotenv';
 
-import { AppModule } from './app.module';
+import { AppModule } from './modules/app.module';
 
 dotenv.load({path: '.env'});
 
