@@ -16,7 +16,8 @@
     "no-trailing-whitespace": false,
     "no-empty": false,
     "no-console": false,
-    "no-consecutive-blank-lines": false
+    "no-consecutive-blank-lines": false,
+    "no-shadowed-variable": false
   },
   "rulesDirectory": []
 }
