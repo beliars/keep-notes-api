@@ -18,11 +18,7 @@ export class AuthController {
   @Post('signup')
   async signup(@Req() req: any, @Res() res: any, @Body() body: SignupDto,
   ) {
-    const user: User = await this.usersService.create(body)
-    .catch(err => {
-      console.log(err);
-      throw err;
-    });
+    const user: User = await this.usersService.create(body);
 
     //const auth: User = await this.authService.auth(body);
     //const token: Token = await this.authService.createToken(auth._id);
