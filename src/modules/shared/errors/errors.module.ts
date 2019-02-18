@@ -4,7 +4,7 @@ import { ErrorsService } from './errors.service';
 
 @Global()
 @Module({
-  components: [
+  providers: [
     ErrorsService,
   ],
   exports: [
