@@ -1,4 +1,4 @@
-import { HttpException, ExceptionFilter, Catch, HttpStatus, ArgumentsHost } from '@nestjs/common';
+import { HttpException, ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
