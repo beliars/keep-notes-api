@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt-nodejs';
+import { User } from '../interfaces/user.interface';
 
 export const UserSchema = new mongoose.Schema({
   email: {
@@ -54,7 +55,7 @@ const hashPassword = (user, next): void => {
 };
 
 UserSchema.pre('save', function(next): void {
-  const user = this;
+  const user: any = this;
   if (user.isModified('email')) {
     user.email = user.email.toLowerCase();
   }
@@ -63,7 +64,8 @@ UserSchema.pre('save', function(next): void {
 });
 
 UserSchema.pre('findOneAndUpdate', function(next): void {
-  const update = this._update;
+  const user: any = this;
+  const update = user._update;
   if (update.$set && update.$set.password) { return hashPassword(update.$set, next); }
   return next();
 });
