@@ -1,8 +1,9 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt-nodejs';
 import { User } from '../interfaces/user.interface';
+import { UpdateQuery } from 'mongodb';
 
-export const UserSchema = new mongoose.Schema({
+export const UserSchema = new mongoose.Schema<User>({
   email: {
     type: String,
     trim: true,
@@ -54,8 +55,8 @@ const hashPassword = (user, next): void => {
   });
 };
 
-UserSchema.pre('save', function(next): void {
-  const user: any = this;
+UserSchema.pre<User>('save', function(next): void {
+  const user = this;
   if (user.isModified('email')) {
     user.email = user.email.toLowerCase();
   }
@@ -63,9 +64,8 @@ UserSchema.pre('save', function(next): void {
   return next();
 });
 
-UserSchema.pre('findOneAndUpdate', function(next): void {
-  const user: any = this;
-  const update = user._update;
+UserSchema.pre<User & {_update: UpdateQuery<User>}>('findOneAndUpdate', function(next): void {
+  const update = this._update;
   if (update.$set && update.$set.password) { return hashPassword(update.$set, next); }
   return next();
 });
