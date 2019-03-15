@@ -13,7 +13,7 @@ const SERVICES = [
 @Global()
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest-rest', {
+    MongooseModule.forRoot('mongodb://localhost/keep-notes', {
       useCreateIndex: true,
       useNewUrlParser: true,
     }),
