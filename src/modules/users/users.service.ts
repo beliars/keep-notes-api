@@ -20,4 +20,12 @@ export class UsersService {
     return await createdUser.save();
   }
   
+  async findById(id: string): Promise<User> {
+    return this.userModel
+    .findById(id)
+    .select('-password')
+    .lean()
+    .then((user: User): User => user);
+  }
+  
 }
