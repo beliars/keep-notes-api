@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Get, Req, Res, Headers, HttpException } from '@nestjs/common';
 
 import { SignupDto } from '../core/dto/signup.dto';
 import { SigninDto } from '../core/dto/signin.dto';
@@ -31,6 +31,16 @@ export class AuthController {
     const auth: User = await this.authService.auth(body);
     const token: Token = await this.authService.createToken(auth._id);
     return res.status(HttpStatus.OK).send({token, user: auth});
+  }
+  
+  @Get('signout')
+  async signout(@Headers('authorization') authHeader: string, @Res() res: any) {
+    if (!authHeader) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    }
+    const token = authHeader.split(' ')[1];
+    const remove = await this.authService.removeToken(token);
+    res.status(HttpStatus.OK).send(remove);
   }
   
 }

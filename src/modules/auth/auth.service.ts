@@ -54,4 +54,31 @@ export class AuthService {
     });
   }
   
+  async findToken(id: string): Promise<Token> {
+    const token: Token = await this.tokenModel
+    .findOne({id})
+    .lean()
+    .then((token: Token): Token => token);
+    if (!token) {
+      throw new HttpException('Token expired', HttpStatus.UNAUTHORIZED);
+    }
+    try {
+      const decoded = jwt.verify(token.id, process.env.SESSION_SECRET);
+    } catch (e) {
+      throw new HttpException('Token expired', HttpStatus.UNAUTHORIZED);
+    }
+    return token;
+  }
+  
+  async removeToken(id: string): Promise<any> {
+    return this.tokenModel
+    .findOne({id})
+    .remove();
+  }
+  
+  async removeUserTokens(userId: string): Promise<any> {
+    return this.tokenModel
+    .remove({userId});
+  }
+  
 }
